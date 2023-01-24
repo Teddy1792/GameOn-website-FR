@@ -12,7 +12,7 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClosingBtn = document.querySelectorAll(".close");
-const modalSubmitBtn = document.querySelectorAll("btn-submit");
+const modalSubmitBtn = document.getElementById("btn-submit");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -31,58 +31,38 @@ function closeModal() {
 }
 
 
-// const needed for the checkModalForm function
+// const needed for the checkFormValidity function
 const modalFirst = document.getElementById("first");
 const modalLast = document.getElementById("last");
 const modalEmail = document.getElementById("email");
 const modalBirthdate = document.getElementById("birthdate");
 const modalQuantity = document.getElementById("quantity");
-const modalLocation = document.getElementsByName("location");
 const modalCheckbox1 = document.getElementById("checkbox1");
 
 
 
-//check modal form validity
-function checkFormValidity() {
+//check form validity function
+function checkFormValidity() {            //Shouldn't I pass arguments here? The debugger says that "TypeError: modalFirst is undefined" when I do...
   if (
-    modalFirst.value >= 2
-    /* && modalLast.value >= 2
-    && modalEmail.value == /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    && modalBirthdate.value == /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/
-    && Number.isInteger(modalQuantity.value) == true
-    && modalLocation.checked == true
-    && modalCheckbox1.checked == true */
+    modalFirst.value.length >= 2 
+    && modalLast.value.length >= 2
+    && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(modalEmail.value)
+    && (/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/).test(modalBirthdate.value)      //Why is the value stored as YYYY-MM-DD?
+    && (/^\d+$/).test(modalQuantity.value)
+    //&& document.querySelector('input[name="location"]:checked')
+    && modalCheckbox1.checked == true 
   ){
-    modalSubmitBtn.removeAttribute('disabled');
+    modalSubmitBtn.removeAttribute('disabled', 'disabled');
+  }
+  else{
+    modalSubmitBtn.setAttribute('disabled', 'disabled');
   }
 }
 
 //launch checkFormValidity on field changes and enable button if valid
-
-modalFirst.addEventListener('change', (event) => {
-  checkFormValidity();
+[modalFirst, modalLast, modalEmail, modalBirthdate, modalQuantity, modalCheckbox1].forEach(field => {
+  field.addEventListener('change', (e) => {
+    console.log("it's launching!");
+    checkFormValidity();
+  });
 });
-
-/*
-
-modalLast.addEventListener('change', (event) => {
-  checkFormValidity();
-});
-
-modalEmail.addEventListener('change', (event) => {
-  checkFormValidity();
-});
-modalBirthdate.addEventListener('change', (event) => {
-  checkFormValidity();
-});
-modalQuantity.addEventListener('change', (event) => {
-  checkFormValidity();
-});
-modalLocation.addEventListener('change', (event) => {
-  checkFormValidity();
-});
-modalCheckbox1.addEventListener('change', (event) => {
-  checkFormValidity();
-});
-
-*/
