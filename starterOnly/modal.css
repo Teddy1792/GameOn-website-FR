@@ -478,6 +478,18 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
+/* 
+Error message style
+*/
+
+.errorMessage{
+  font-size: 13px;
+  font-family: var(--font-default);
+  color:#f00
+}
+
+
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;
