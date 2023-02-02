@@ -13,6 +13,7 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClosingBtn = document.querySelectorAll(".close");
 const modalSubmitBtn = document.getElementById("btn-submit");
+const modalBody = document.querySelector(".modal-body");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -112,7 +113,7 @@ else {
 }
 }
 
-//function to check if radio button has been checked
+//function checking if radio button has been checked
 function checkOneRadioChecked(modalLocation) {
   let isSomeOneChecked = false;
   document.querySelectorAll('input[name="location"]').forEach(input => {
@@ -123,6 +124,12 @@ function checkOneRadioChecked(modalLocation) {
   return isSomeOneChecked;
 }
 
+//function displaying a congratulation message
+function congratulation () {
+  modalBody.innerHTML = "Félicitation, l'inscription est complète !";
+  modalBody.style.fontSize = "16px";
+}
+
 document.getElementById("btn-submit").addEventListener("click", function(submit){
   //prevent default behaviour on submit button
   submit.preventDefault();
@@ -131,7 +138,7 @@ document.getElementById("btn-submit").addEventListener("click", function(submit)
   checkFieldsValidity();
 
   //chekc the overall form validy and launch if true
-  if (checkFormValidity){
-    
+  if (checkFormValidity()){
+    congratulation();
   }
 });
