@@ -20,7 +20,10 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
 function launchModal() {
+  document.getElementById("reserve").reset();
   modalbg.style.display = "block";
+  modalBodyText.style.display = "block";
+  congratulationMessage.style.display = "none";
 }
 
 // close modal form
@@ -51,6 +54,7 @@ function checkFormValidity() {
     && modalLast.value.length >= 2
     && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(modalEmail.value)
     && (/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/).test(modalBirthdate.value)
+    && dateValidity(modalBirthdate)
     && (/^\d+$/).test(modalQuantity.value)
     && checkOneRadioChecked(modalLocation)
     && modalCheckbox1.checked 
@@ -59,6 +63,21 @@ function checkFormValidity() {
   }
 }
 
+//check if date is valid
+function dateValidity() {
+  let date = new Date()
+  let fullDateNumber = date.getTime();
+  let dateBirthday = new Date(modalBirthdate.value);
+  let dateBirthdayNumber = dateBirthday.getTime();
+
+  if(dateBirthdayNumber < fullDateNumber){
+    return true;
+  }
+  else{
+    document.querySelector(".errorBirthdate").innerHTML = "Vous devez entrer une date de naissance valide.";
+    return false;
+  }
+}
 
 
 //display or hide error message
@@ -124,10 +143,13 @@ function checkOneRadioChecked(modalLocation) {
   return isSomeOneChecked;
 }
 
+const modalBodyText = document.getElementById("modalBodyText");
+const congratulationMessage = document.getElementById("congratulationMessage");
+
 //function displaying a congratulation message
 function congratulation () {
-  modalBody.innerHTML = "Félicitation, l'inscription est complète !";
-  modalBody.style.fontSize = "16px";
+  modalBodyText.style.display = "none";
+  congratulationMessage.style.display = "block";
 }
 
 document.getElementById("btn-submit").addEventListener("click", function(submit){
