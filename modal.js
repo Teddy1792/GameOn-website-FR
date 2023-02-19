@@ -20,7 +20,6 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
 function launchModal() {
-  document.getElementById("reserve").reset();
   modalbg.style.display = "block";
   modalBodyText.style.display = "block";
   congratulationMessage.style.display = "none";
@@ -162,5 +161,6 @@ document.getElementById("btn-submit").addEventListener("click", function(submit)
   //chekc the overall form validy and launch if true
   if (checkFormValidity()){
     congratulation();
+    document.getElementById("reserve").reset();
   }
 });
